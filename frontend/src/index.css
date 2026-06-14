@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Backgrounds */
+  --bg-base:       #050508;
+  --bg-surface:    #0a0a0f;
+  --bg-elevated:   #11111a;
+
+  /* Borders */
+  --border-subtle: #161624;
+  --border-active: rgba(0, 98, 255, 0.4);
+
+  /* Brand */
+  --accent:        #0062ff; /* Electric Blue */
+  --accent-2:      #00ff66; /* Neon Green */
+  --accent-glow:   rgba(0, 98, 255, 0.2);
+
+  /* Text */
+  --text-primary:  #e8e8f0;
+  --text-muted:    #8888a5;
+  --text-faint:    #43435c;
+
+  /* Status */
+  --success:       #00ff66;
+  --warning:       #facc15;
+  --error:         #ef4444;
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Background Animations */
+.bg-mesh {
+  background:
+    radial-gradient(ellipse 60% 60% at 20% -20%, rgba(0, 98, 255, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 120%, rgba(0, 255, 102, 0.12) 0%, transparent 60%),
+    var(--bg-base);
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(0, 98, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 98, 255, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.bg-dots {
+  background-image: radial-gradient(rgba(0, 98, 255, 0.1) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+/* Micro-interactions */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.btn:hover::before  { opacity: 1; }
+.btn:hover          { transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+.btn:active         { transform: translateY(0px) scale(0.98); }
+
+.card {
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-surface);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card:hover {
+  border-color: var(--border-active);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 98, 255, 0.15);
+}
+
+.input {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+  outline: none;
+}
+
+/* Page Load Animation */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-in {
+  animation: fadeSlideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.stagger > *:nth-child(1) { animation-delay: 0ms; }
+.stagger > *:nth-child(2) { animation-delay: 80ms; }
+.stagger > *:nth-child(3) { animation-delay: 160ms; }
+.stagger > *:nth-child(4) { animation-delay: 240ms; }
+.stagger > *:nth-child(5) { animation-delay: 320ms; }
+
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent) 70%, var(--accent-2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow Effects */
+.icon-glow-blue { filter: drop-shadow(0 0 8px var(--accent)); }
+.icon-glow-green { filter: drop-shadow(0 0 8px var(--accent-2)); }
+
+@keyframes borderSpin {
+  to { transform: rotate(360deg); }
+}
+.border-glow {
+  position: relative;
+  overflow: hidden;
+}
+.border-glow::before {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  background: conic-gradient(from 0deg, transparent, var(--accent), transparent 60%);
+  animation: borderSpin 4s linear infinite;
+  z-index: 0;
+  top: -25%;
+  left: -25%;
+}
+.border-glow-inner {
+  position: relative;
+  z-index: 1;
+  background-color: var(--bg-surface);
+  height: calc(100% - 2px);
+  width: calc(100% - 2px);
+  margin: 1px;
+}
