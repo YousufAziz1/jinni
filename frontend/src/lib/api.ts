@@ -1,4 +1,9 @@
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+export let API_BASE = (localStorage.getItem('JINNI_API_URL') || import.meta.env.VITE_API_URL || 'http://localhost:8000/api').trim()
+
+export const setApiBase = (url: string) => {
+  localStorage.setItem('JINNI_API_URL', url.trim())
+  API_BASE = url.trim()
+}
 
 export interface WalletPolicy {
   max_spend_trade: number
