@@ -1,22 +1,56 @@
-# Jinni 🧞 | Autonomous Wallet Agent
+# 🧞 JINNI — Autonomous DeFi Wallet Agent
 
-Jinni is a complete, real, verifiable autonomous DeFi agent platform built for Ethereum Sepolia. It allows users to safely delegate transaction rights (using EIP-7710/7715 principles) to an AI agent, which handles market research, analyzes risk boundaries, executes trades, and monitors positions within user-approved limits.
+<div align="center">
+  <img src="frontend/public/logo.jpg" alt="JINNI Logo" width="120" style="border-radius: 20px; border: 2px solid #6c63ff;" />
+  <h3>Autonomous Agentic DeFi Wallet Layer</h3>
+  <p>Delegated execution powered by Venice AI, MetaMask Smart Account permissions, and ERC-7710/7715 architectures.</p>
+
+  [![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployed-success?style=for-the-badge&logo=vercel&color=000000)](https://jinni-omega.vercel.app/)
+  [![Network Sepolia](https://img.shields.io/badge/Sepolia-Connected-blue?style=for-the-badge&logo=ethereum&color=454a75)](https://sepolia.etherscan.io/)
+  [![Powered by Venice AI](https://img.shields.io/badge/Venice%20AI-Llama3.3--70b-orange?style=for-the-badge&logo=openai&color=e6643c)](https://venice.ai/)
+  [![License MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge&color=2e8c58)](./LICENSE)
+</div>
+
+---
+
+## 🔗 Live Resources
+
+* **Live Frontend**: [https://jinni-omega.vercel.app/](https://jinni-omega.vercel.app/)
+* **Live Backend API**: [https://jinni-6wfe.onrender.com/api/status](https://jinni-6wfe.onrender.com/api/status)
+* **Demo Video**: [https://youtu.be/skp-PdfZ4Ko](https://youtu.be/skp-PdfZ4Ko)
+* **X (Twitter) Profile**: [https://x.com/JinniAgent](https://x.com/JinniAgent)
+* **Launch Post**: [https://x.com/JinniAgent/status/2066420765499801732](https://x.com/JinniAgent/status/2066420765499801732)
+
+---
+
+## 🎨 Platform Dashboard
+
+![JINNI Dashboard](./screenshot.png)
+
+---
+
+## 🏆 Hackathon Track Mapping
+
+| Track / Integration | Technology Used | Implementation Details & Code Files |
+| :--- | :--- | :--- |
+| **MetaMask Smart Accounts** | MetaMask EIP-712 Signatures | Users sign typed spending limits securely via MetaMask, simulating gasless/non-custodial session authorization. <br> 📄 See [`frontend/src/lib/web3.ts`](./frontend/src/lib/web3.ts) |
+| **Venice AI Reasoning Core** | Llama-3.3-70b Inference | Evaluates user wallet history, recommends safe daily risk limits, and scores tokens to execute swaps autonomously. <br> 📄 See [`backend/agents.py`](./backend/agents.py) |
+| **ERC-7715 / Permissioning** | On-Chain Delegated Permissions | Restricts agent actions to specific assets, trade sizes, and expiration limits verified directly inside smart contracts. <br> 📄 See [`contracts/JinniDelegator.sol`](./contracts/JinniDelegator.sol) |
+| **ERC-7710 / Delegations** | Non-Custodial Vault Swapping | Ensures the agent EOA can only interact within user-deposited vault parameters and has zero rights to withdraw funds. <br> 📄 See [`contracts/JinniDelegator.sol`](./contracts/JinniDelegator.sol) |
 
 ---
 
 ## 🚀 Key Features
 
-* **MetaMask Permission Granting**: User signs a one-time EIP-712 permission structure specifying trade limits, budget boundaries, and expiry.
-* **Venice AI Reasoning Core**: Uses Llama models via Venice AI to evaluate wallet risk boundaries and perform technical asset analysis.
-* **Non-Custodial On-Chain Trading**: User deposits testing funds into a vault contract. The agent can ONLY execute trades within the contract and cannot withdraw funds.
-* **Automatic Monitoring & Exit Loop**: Continuous background monitoring loop evaluates profit/loss, automatically executing exits if Stop Loss or Take Profit levels are crossed.
-* **Built-in test token faucet**: Users can mint 1,000 units of USDC, LINK, or UNI directly on Sepolia from the dashboard.
+* **AI-Generated Risk Policy**: Venice AI checks your wallet holdings and recommends trade sizes, weekly limits, and duration bounds.
+* **On-Chain Session Signatures**: EIP-712 session approvals register agent spending limits on-chain, keeping you in full control.
+* **Non-Custodial Escrow Vault**: Users deposit Sepolia ETH, USDC, LINK, or UNI. The agent swaps inside the Uniswap V3 Pool but can never extract funds.
+* **Continuous Active Loop**: The backend agent scans markets, scores tokens, executes trades, and automatically triggers stop-loss / take-profit exits.
+* **Built-in Sepolia Faucet**: Mint Mock USDC, LINK, or UNI directly on-chain through the dashboard.
 
 ---
 
-## 📐 System Architecture
-
-### Sequence Flow
+## 📐 System Architecture & Flow
 
 ```mermaid
 sequenceDiagram
@@ -64,24 +98,22 @@ sequenceDiagram
 
 ---
 
-## ⛓️ Deployed Contracts (Sepolia)
+## ⛓️ Deployed Contracts (Sepolia Network)
 
-* **JinniDelegator Vault**: `0x5462D420CEf200c8704Db6b48BE9Db3A000A231C`
-* **Test USDC Token**: `0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238`
-* **Test LINK Token**: `0x779877A7B0D9E8603169DdbD7836e478b4624789`
-* **Test UNI Token**: `0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984`
+* **JinniDelegator Vault**: [`0x5462D420CEf200c8704Db6b48BE9Db3A000A231C`](https://sepolia.etherscan.io/address/0x5462D420CEf200c8704Db6b48BE9Db3A000A231C)
+* **Test USDC Token**: [`0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238`](https://sepolia.etherscan.io/address/0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238)
+* **Test LINK Token**: [`0x779877A7B0D9E8603169DdbD7836e478b4624789`](https://sepolia.etherscan.io/address/0x779877A7B0D9E8603169DdbD7836e478b4624789)
+* **Test UNI Token**: [`0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984`](https://sepolia.etherscan.io/address/0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984)
 * **Uniswap V3 Router02**: `0x3bFA4769FB09eefC5a80d6E87c3B9C650f7Ae48E`
 
 ---
 
-## 🛠️ Project Setup
+## 🛠️ Installation & Setup
 
 ### Prerequisites
-* Python 3.10+
-* Node.js v18+ & `pnpm`
-* MetaMask installed in your browser
-
----
+* **Python 3.10+** (Backend)
+* **Node.js v18+** & `pnpm` (Frontend)
+* **MetaMask browser extension** (Sepolia network)
 
 ### 1. Backend Setup
 
@@ -89,25 +121,20 @@ sequenceDiagram
    ```bash
    cd backend
    ```
-2. Install Python dependencies:
+2. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-3. Create a `.env` file from the template:
+3. Create environment variables:
    ```bash
    cp .env.example .env
    ```
-4. Edit the `.env` file and configure:
-   * `VENICE_API_KEY`: Get one from [Venice AI Console](https://venice.ai).
-   * `AGENT_PRIVATE_KEY`: Private key of the EOA delegate agent address. Needs a tiny bit of Sepolia ETH to submit transactions.
-   * `SEPOLIA_RPC_URL`: RPC endpoint (e.g. Infura, Ankr, Alchemy).
-5. Start the FastAPI server:
+4. Configure your `.env` values (Venice API Key, RPC URL, and Agent private key).
+5. Run the server:
    ```bash
    python main.py
    ```
-   The backend will be running at `http://localhost:8000`.
-
----
+   Backend runs at `http://localhost:8000`.
 
 ### 2. Frontend Setup
 
@@ -115,25 +142,81 @@ sequenceDiagram
    ```bash
    cd ../frontend
    ```
-2. Install Node packages:
+2. Install packages:
    ```bash
    pnpm install
    ```
-3. Run the development server:
+3. Start the Vite server:
    ```bash
    pnpm dev
    ```
-   Open `http://localhost:5173` in your browser.
+   Frontend runs at `http://localhost:5173`.
 
 ---
 
-## 💡 How to Test the Flow
+## 💡 Step-by-Step Test Guide
 
-1. **Connect MetaMask**: Click **Connect Wallet** in the top right. Switch your network to **Ethereum Sepolia**.
-2. **Claim Test Tokens**: In the **Sepolia Test Faucet** panel, click **Claim USDC**. This will mint test USDC directly to your wallet on-chain.
-3. **Deposit to Vault**: Select `USDC` in the **Agent Trading Vault** panel, type an amount (e.g. `20`), and click **Deposit to Vault**. Confirm the transaction in MetaMask.
-4. **AI Policy recommendation**: Click **Analyze Wallet Risk (Venice AI)**. The Wallet Analysis Agent will review your Sepolia balance and suggest spending limits.
-5. **Approve Limits & Sign EIP-712**: Click **Approve Policy & Sign EIP-712**. Sign the typed permission request in MetaMask. This registers the agent's delegation status.
-6. **DeFi Research**: Type a token symbol (like `LINK` or `UNI`) in the **DeFi Research Agent** console and click **Score Token**. The Research Agent will fetch real-time indicators and Venice AI will provide a scoring verdict.
-7. **Trigger Agent Trade**: If the verdict is `BUY`, click **Execute Agent Swap**. The agent will submit the transaction to Sepolia using the delegation contract.
-8. **Position Exit**: The backend monitoring agent will periodically check the position. If the price reaches the Stop Loss or Take Profit targets, it will autonomously sell and close the position on-chain.
+1. **Connect MetaMask**: Click **Connect Wallet** (top-right) and switch your network to **Sepolia**.
+2. **Mock Token setup**: Click **Setup Local Test Environment** in the faucet card to register/deploy the testing tokens inside MetaMask.
+3. **Mint USDC**: Click **Claim USDC** to mint 1,000 mock USDC for testing.
+4. **Deposit to Vault**: Select `USDC` in the **Agent Trading Vault** panel, input `25`, and click **Deposit to Vault**.
+5. **Analyze Wallet**: Click **Analyze Wallet Risk (Venice AI)**. The agent will read your Sepolia balances and generate a custom trading limit policy.
+6. **Grant Permissions**: Click **Approve Policy & Sign EIP-712**. Sign the signature request inside MetaMask.
+7. **DeFi Research**: Type a token symbol (e.g. `LINK` or `UNI`) in the **DeFi Research Agent** box and click **Score Token** to get AI evaluation.
+8. **Trade**: If the AI returns a `BUY` verdict, click **Execute Agent Swap** to execute the trade autonomously using the agent.
+9. **Exit Monitoring**: The position will load under **Active Positions Monitor**. The background exit loops will automatically execute a sell swap if Take Profit or Stop Loss thresholds are hit.
+
+---
+
+## ✉️ Outreach / DM Template
+
+If you want to reach out to builders, mentors, or judges, use this template:
+
+```markdown
+Hi 👋
+
+I just completed my hackathon project JINNI — Autonomous DeFi Wallet Agent.
+
+JINNI combines:
+* MetaMask Smart Accounts
+* ERC-7715 Permissions
+* ERC-7710 Delegations
+* Venice AI
+
+Users can connect their wallet, set spending limits, grant permissions, and allow an AI agent to research and execute actions within those limits while remaining fully in control.
+
+### Demo Video
+https://youtu.be/skp-PdfZ4Ko
+
+### GitHub
+https://github.com/YousufAziz1/jinni
+
+### X Profile
+https://x.com/JinniAgent
+
+### Launch Post
+https://x.com/JinniAgent/status/2066420765499801732
+
+Current features:
+✅ Wallet Connection
+✅ Agent Permissions
+✅ Venice AI Research Agent
+✅ Trading Vault
+✅ Activity Logs
+✅ Position Monitoring UI
+✅ Sepolia Test Environment
+
+I'm currently polishing the final submission.
+
+I'd really appreciate any feedback on:
+* Missing features
+* UX improvements
+* Hackathon judging perspective
+* Documentation gaps
+
+Thanks for taking a look! 🙏
+```
+
+---
+
+*Built with ❤️ for the Hackathon by Yousuf.*

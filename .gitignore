@@ -29,6 +29,7 @@ pip-delete-this-directory.txt
 .env.test.local
 .env.production.local
 .env.*
+!.env.example
 
 # OS files
 .DS_Store
