@@ -573,19 +573,46 @@ export default function App() {
             </p>
 
             {!mockInitialized && (
-              <div className="mb-4 p-3 bg-status-warning/10 border border-status-warning/30 rounded-xl text-[11px] text-status-warning flex flex-col gap-2">
-                <div className="flex items-start gap-1.5">
-                  <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
-                  <span>
-                    Official Circle Sepolia USDC is read-only and cannot be minted. Initialize custom Mock USDC, LINK, and UNI tokens to enable direct claims.
-                  </span>
+              <div className="mb-6 p-4 rounded-xl border border-accent/25 bg-accent/5 flex flex-col gap-3 relative overflow-hidden group">
+                {/* Ambient glow in corner */}
+                <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-accent/10 rounded-full blur-xl pointer-events-none group-hover:scale-125 transition-transform duration-500" />
+                
+                <div className="flex items-start gap-2.5">
+                  <Sparkles className="w-5 h-5 text-accent shrink-0 mt-0.5 animate-pulse" />
+                  <div>
+                    <h4 className="text-xs font-semibold text-text-primary mb-1">Setup Local Test Environment</h4>
+                    <p className="text-[11px] text-text-muted leading-relaxed">
+                      Deploy custom Mock USDC, LINK, and UNI tokens on Sepolia to enable unlimited faucet claims and risk-free testing.
+                    </p>
+                  </div>
                 </div>
+                
                 <button
                   disabled={!walletConnected || faucetLoading !== null}
                   onClick={handleInitializeMocks}
-                  className="py-1.5 px-3 rounded-lg bg-status-warning/20 hover:bg-status-warning/30 border border-status-warning/40 text-[10px] font-bold text-text-primary self-start transition-all"
+                  className={`
+                    relative overflow-hidden rounded-xl font-semibold text-xs
+                    flex items-center gap-2 justify-center px-4 py-2.5 self-start
+                    transition-all duration-200 active:scale-[0.97]
+                    ${!walletConnected 
+                      ? 'bg-bg-elevated/40 text-text-faint border border-transparent cursor-not-allowed'
+                      : faucetLoading === 'INITIALIZING'
+                        ? 'bg-accent/20 text-accent border border-accent/30 cursor-wait'
+                        : 'bg-accent text-white hover:shadow-lg hover:shadow-[var(--accent-glow)] hover:-translate-y-0.5'
+                    }
+                  `}
                 >
-                  {faucetLoading === 'INITIALIZING' ? 'Deploying Contracts...' : 'Initialize Mock Tokens via MetaMask'}
+                  {faucetLoading === 'INITIALIZING' ? (
+                    <>
+                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                      Deploying Contracts...
+                    </>
+                  ) : (
+                    <>
+                      <Coins className="w-3.5 h-3.5" />
+                      Initialize Mock Tokens (MetaMask)
+                    </>
+                  )}
                 </button>
               </div>
             )}
