@@ -15,7 +15,8 @@ import {
   DollarSign, 
   Activity, 
   Database,
-  Sparkles
+  Sparkles,
+  Settings
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -34,7 +35,7 @@ import {
   areMockTokensInitialized,
   deployTestToken
 } from './lib/web3';
-import { api } from './lib/api';
+import { api, API_BASE, setApiBase } from './lib/api';
 import type { WalletPolicy, TokenScore, Position, ActivityLog, BackendStatus } from './lib/api';
 
 export default function App() {
@@ -46,6 +47,8 @@ export default function App() {
 
   // System Status
   const [backendStatus, setBackendStatus] = useState<BackendStatus | null>(null);
+  const [showSettings, setShowSettings] = useState<boolean>(false);
+  const [apiUrlInput, setApiUrlInput] = useState<string>(API_BASE);
 
   // Faucet State — initialized from localStorage so it survives page refresh
   const [faucetLoading, setFaucetLoading] = useState<string | null>(null);
@@ -460,12 +463,67 @@ export default function App() {
           </div>
           
           <div className="flex items-center gap-4">
-            {backendStatus && (
+            {backendStatus ? (
               <span className="text-xs px-2.5 py-1 rounded-full bg-status-success/10 text-status-success border border-status-success/20 flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-status-success animate-ping" />
                 Backend Live
               </span>
+            ) : (
+              <span className="text-xs px-2.5 py-1 rounded-full bg-status-error/10 text-status-error border border-status-error/20 flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-status-error" />
+                Backend Offline
+              </span>
             )}
+
+            <div className="relative">
+              <button
+                onClick={() => setShowSettings(!showSettings)}
+                className="p-2 rounded-xl border border-border-subtle bg-bg-surface text-text-muted hover:text-text-primary hover:border-accent/40 transition-colors flex items-center justify-center"
+                title="API Settings"
+              >
+                <Settings className="w-4 h-4" />
+              </button>
+
+              {showSettings && (
+                <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-border-subtle bg-bg-surface p-4 shadow-2xl z-50 animate-in">
+                  <h4 className="text-sm font-semibold text-text-primary mb-1">Backend Connection</h4>
+                  <p className="text-xs text-text-muted mb-3">Set the URL of your live FastAPI server.</p>
+                  
+                  <div className="flex flex-col gap-2">
+                    <input
+                      type="text"
+                      value={apiUrlInput}
+                      onChange={(e) => setApiUrlInput(e.target.value)}
+                      placeholder="http://localhost:8000/api"
+                      className="w-full text-xs bg-bg-base border border-border-subtle focus:border-accent rounded-lg px-3 py-2 text-text-primary outline-none transition-colors"
+                    />
+                    <div className="flex gap-2 justify-end mt-1">
+                      <button
+                        onClick={() => {
+                          setApiUrlInput('http://localhost:8000/api');
+                          setApiBase('http://localhost:8000/api');
+                          window.location.reload();
+                        }}
+                        className="text-[10px] text-text-muted hover:text-text-primary px-2 py-1 rounded border border-border-subtle"
+                      >
+                        Reset to Local
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (apiUrlInput.trim()) {
+                            setApiBase(apiUrlInput.trim());
+                            window.location.reload();
+                          }
+                        }}
+                        className="text-[10px] bg-accent hover:bg-accent/80 text-white font-medium px-3 py-1 rounded-lg"
+                      >
+                        Save & Reload
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
             
             {!walletConnected ? (
               <button 
