@@ -1,9 +1,11 @@
 # 🧞 JINNI — Autonomous DeFi Wallet Agent
 
+> 🎯 Built for the MetaMask Smart Accounts x Venice AI Hackathon
+
 <div align="center">
   <img src="frontend/public/logo.jpg" alt="JINNI Logo" width="120" style="border-radius: 20px; border: 2px solid #6c63ff;" />
   <h3>Autonomous Agentic DeFi Wallet Layer</h3>
-  <p>Delegated execution powered by Venice AI, MetaMask Smart Account permissions, and ERC-7710/7715 architectures.</p>
+  <p>Delegated execution powered by Venice AI, MetaMask EIP-712 permissions, and ERC-7710/7715 architectures.</p>
 
   [![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployed-success?style=for-the-badge&logo=vercel&color=000000)](https://jinni-omega.vercel.app/)
   [![Network Sepolia](https://img.shields.io/badge/Sepolia-Connected-blue?style=for-the-badge&logo=ethereum&color=454a75)](https://sepolia.etherscan.io/)
@@ -33,7 +35,7 @@
 
 | Track / Integration | Technology Used | Implementation Details & Code Files |
 | :--- | :--- | :--- |
-| **MetaMask Smart Accounts** | MetaMask EIP-712 Signatures | Users sign typed spending limits securely via MetaMask, simulating gasless/non-custodial session authorization. <br> 📄 See [`frontend/src/lib/web3.ts`](./frontend/src/lib/web3.ts) |
+| **MetaMask & EIP-712 Delegations** | MetaMask EIP-712 Signatures | Users sign typed spending limits securely via MetaMask, simulating non-custodial session authorization and EIP-7715 keys. <br> 📄 See [`frontend/src/lib/web3.ts`](./frontend/src/lib/web3.ts) |
 | **Venice AI Reasoning Core** | Llama-3.3-70b Inference | Evaluates user wallet history, recommends safe daily risk limits, and scores tokens to execute swaps autonomously. <br> 📄 See [`backend/agents.py`](./backend/agents.py) |
 | **ERC-7715 / Permissioning** | On-Chain Delegated Permissions | Restricts agent actions to specific assets, trade sizes, and expiration limits verified directly inside smart contracts. <br> 📄 See [`contracts/JinniDelegator.sol`](./contracts/JinniDelegator.sol) |
 | **ERC-7710 / Delegations** | Non-Custodial Vault Swapping | Ensures the agent EOA can only interact within user-deposited vault parameters and has zero rights to withdraw funds. <br> 📄 See [`contracts/JinniDelegator.sol`](./contracts/JinniDelegator.sol) |
@@ -45,7 +47,7 @@
 * **AI-Generated Risk Policy**: Venice AI checks your wallet holdings and recommends trade sizes, weekly limits, and duration bounds.
 * **On-Chain Session Signatures**: EIP-712 session approvals register agent spending limits on-chain, keeping you in full control.
 * **Non-Custodial Escrow Vault**: Users deposit Sepolia ETH, USDC, LINK, or UNI. The agent swaps inside the Uniswap V3 Pool but can never extract funds.
-* **Continuous Active Loop**: The backend agent scans markets, scores tokens, executes trades, and automatically triggers stop-loss / take-profit exits.
+* **Position Monitoring Agent**: Evaluates active vault swaps with automated exit logic (Stop Loss & Take Profit thresholds).
 * **Built-in Sepolia Faucet**: Mint Mock USDC, LINK, or UNI directly on-chain through the dashboard.
 
 ---
