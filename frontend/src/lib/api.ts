@@ -1,4 +1,17 @@
-export let API_BASE = (localStorage.getItem('JINNI_API_URL') || import.meta.env.VITE_API_URL || 'https://jinni-6wfe.onrender.com/api').trim()
+export let API_BASE = (() => {
+  const saved = localStorage.getItem('JINNI_API_URL')
+  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  
+  if (saved) {
+    if (!isLocalhost && saved.includes('localhost')) {
+      localStorage.removeItem('JINNI_API_URL')
+      return 'https://jinni-6wfe.onrender.com/api'
+    }
+    return saved.trim()
+  }
+  
+  return isLocalhost ? 'http://localhost:8000/api' : 'https://jinni-6wfe.onrender.com/api'
+})().trim()
 
 export const setApiBase = (url: string) => {
   localStorage.setItem('JINNI_API_URL', url.trim())
