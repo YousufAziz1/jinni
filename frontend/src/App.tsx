@@ -494,7 +494,7 @@ export default function App() {
                       type="text"
                       value={apiUrlInput}
                       onChange={(e) => setApiUrlInput(e.target.value)}
-                      placeholder="http://localhost:8000/api"
+                      placeholder="https://jinni-6wfe.onrender.com/api"
                       className="w-full text-xs bg-bg-base border border-border-subtle focus:border-accent rounded-lg px-3 py-2 text-text-primary outline-none transition-colors"
                     />
                     <div className="flex gap-2 justify-end mt-1">
@@ -507,6 +507,16 @@ export default function App() {
                         className="text-[10px] text-text-muted hover:text-text-primary px-2 py-1 rounded border border-border-subtle"
                       >
                         Reset to Local
+                      </button>
+                      <button
+                        onClick={() => {
+                          setApiUrlInput('https://jinni-6wfe.onrender.com/api');
+                          setApiBase('https://jinni-6wfe.onrender.com/api');
+                          window.location.reload();
+                        }}
+                        className="text-[10px] text-text-muted hover:text-text-primary px-2 py-1 rounded border border-border-subtle"
+                      >
+                        Reset to Live
                       </button>
                       <button
                         onClick={() => {
